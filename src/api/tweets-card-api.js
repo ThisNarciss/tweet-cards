@@ -9,7 +9,7 @@ export function getUsersData() {
     .catch(error => console.log(error));
 }
 
-export function updateUsersData(id) {
+export function updateUsersData(id, data) {
   return axios
     .put(`/users/:${id}`)
     .then(data => console.log(data))
