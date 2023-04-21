@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 axios.defaults.baseURL = 'https://6442397876540ce22586f7fa.mockapi.io/api/v1';
 
 export function getUsersData() {
