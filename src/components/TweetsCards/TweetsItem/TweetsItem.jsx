@@ -28,9 +28,8 @@ export function TweetsItem({
   const onBtnClick = () => {
     if (!isFollow) {
       setIsLoading(true);
-      const incFollowers = newFollowersCount + 1;
 
-      updateUsersData(id, { followers: incFollowers, following: true })
+      updateUsersData(id, { followers: newFollowersCount + 1, following: true })
         .then(({ followers, following }) => {
           setIsFollow(following);
           setNewFollowersCount(followers);
@@ -40,9 +39,10 @@ export function TweetsItem({
     } else {
       setIsLoading(true);
 
-      const decFollowers = newFollowersCount - 1;
-
-      updateUsersData(id, { followers: decFollowers, following: false })
+      updateUsersData(id, {
+        followers: newFollowersCount - 1,
+        following: false,
+      })
         .then(({ followers, following }) => {
           setIsFollow(following);
           setNewFollowersCount(followers);
