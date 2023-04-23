@@ -2,7 +2,6 @@ import {
   Avatar,
   AvatarBox,
   Btn,
-  Ellipse,
   Item,
   Logo,
   Picture,
@@ -15,29 +14,53 @@ import {
 import logo from '../../../images/logo-goit.svg';
 import picture from '../../../images/picture-@1x.png';
 import rectangle from '../../../images/rectangle-@1x.png';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { updateUsersData } from '../../../api/tweets-card-api';
-// import ellipse from '../../../images/ellipse-@1x.png';
+import { ColorRing } from 'react-loader-spinner';
 
-export function TweetsItem({ user: { id, avatar, user, tweets, followers } }) {
-  const [isFollow, setIsFollow] = useState(false);
-  const [btnText, setBtnText] = useState('Follow');
-  const [newFollowers, setNewFollowers] = useState(followers);
-
-  useEffect(() => {}, []);
+export function TweetsItem({
+  user: { id, avatar, tweets, followers, following },
+}) {
+  const [isFollow, setIsFollow] = useState(following);
+  const [newFollowersCount, setNewFollowersCount] = useState(followers);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onBtnClick = () => {
     if (!isFollow) {
-      setNewFollowers(prevState => prevState + 1);
-      setBtnText('Following');
-      setIsFollow(true);
+      setIsLoading(true);
+      const incFollowers = newFollowersCount + 1;
+
+      updateUsersData(id, { followers: incFollowers, following: true })
+        .then(({ followers, following }) => {
+          setIsFollow(following);
+          setNewFollowersCount(followers);
+        })
+        .catch(error => console.log(error))
+        .finally(() => setIsLoading(false));
     } else {
-      setNewFollowers(prevState => prevState - 1);
-      setBtnText('Follow');
-      setIsFollow(false);
+      setIsLoading(true);
+
+      const decFollowers = newFollowersCount - 1;
+
+      updateUsersData(id, { followers: decFollowers, following: false })
+        .then(({ followers, following }) => {
+          setIsFollow(following);
+          setNewFollowersCount(followers);
+        })
+        .catch(error => console.log(error))
+        .finally(() => setIsLoading(false));
     }
   };
-  console.log(newFollowers);
+
+  const changeFollowersCountStyle = () => {
+    const followers = newFollowersCount.toString().split('');
+    if (followers.length > 3) {
+      followers.splice(followers.length - 3, 0, ',');
+      return followers.join('');
+    }
+    return followers.join('');
+  };
+
   return (
     <Item>
       <Logo src={logo} />
@@ -48,14 +71,25 @@ export function TweetsItem({ user: { id, avatar, user, tweets, followers } }) {
       <Rectangle src={rectangle} />
       <AvatarBox>
         <Avatar src={avatar} />
-        {/* <Ellipse src={ellipse} /> */}
       </AvatarBox>
       <TextContainer>
         <Text>{tweets} tweets</Text>
-        <Text style={{ marginTop: '16px' }}>{newFollowers} followers</Text>
+        <Text style={{ marginTop: '16px' }}>
+          {changeFollowersCountStyle()} followers
+        </Text>
       </TextContainer>
       <Btn onClick={onBtnClick} isFollow={isFollow}>
-        {btnText}
+        {isFollow ? 'Following' : 'Follow'}{' '}
+        {isLoading && (
+          <ColorRing
+            visible={true}
+            height="20"
+            width="20"
+            ariaLabel="blocks-loading"
+            wrapperClass="blocks-wrapper"
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />
+        )}
       </Btn>
     </Item>
   );

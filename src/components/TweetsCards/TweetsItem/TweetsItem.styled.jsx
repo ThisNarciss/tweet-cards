@@ -109,6 +109,9 @@ export const Btn = styled.button`
   margin-top: 26px;
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   font-family: 'Montserrat';
   font-style: normal;
@@ -118,7 +121,19 @@ export const Btn = styled.button`
   text-transform: uppercase;
   color: #373737;
   transition: background-color 250ms linear;
-  background: ${({ isFollow }) => (isFollow ? '#5CD3A8' : '#ebd8ff')};
+  background: ${({ isFollow }) => (isFollow ? '#5cd3a8' : '#ebd8ff')};
   box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  transition: all 0.3s ease;
+  :hover {
+    background-color: ${({ isFollow }) => (isFollow ? '#3a8167' : '#8f829c')};
+  }
+  :active {
+    transform: translateY(1px);
+  }
+  :disabled {
+    background-color: #d9d9d9;
+    color: #666;
+    cursor: not-allowed;
+  }
 `;
