@@ -32,7 +32,7 @@ export function TweetsCards() {
   const [newStatus, dispatch] = useReducer(statusFilter, 'all');
 
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/tweets';
+  const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
     getUsersData(pagCount)
@@ -68,7 +68,7 @@ export function TweetsCards() {
         <RiArrowGoBackFill />
         Go back
       </BackLink>
-      <FilterTweets addStatusCards={addStatusCards} />
+      <FilterTweets addStatusCards={addStatusCards} newStatus={newStatus} />
       <TweetsList>
         {filteredUsers.map(user => (
           <TweetsItem key={user.id} user={user} />

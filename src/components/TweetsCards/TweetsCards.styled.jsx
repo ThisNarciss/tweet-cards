@@ -48,7 +48,7 @@ export const LoadMoreBtn = styled.button`
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 300ms ease;
 
   :hover {
     background-color: #0093e0;

@@ -124,7 +124,7 @@ export const Btn = styled.button`
   background: ${({ isFollow }) => (isFollow ? '#5cd3a8' : '#ebd8ff')};
   box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  transition: all 0.3s ease;
+  transition: all 300ms ease;
   :hover {
     background-color: ${({ isFollow }) => (isFollow ? '#3a8167' : '#8f829c')};
   }

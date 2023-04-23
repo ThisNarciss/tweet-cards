@@ -1,13 +1,24 @@
 import { FilterButton, FilterContainer } from './FilterTweets.styled';
 
-export function FilterTweets({ addStatusCards }) {
+export function FilterTweets({ addStatusCards, newStatus }) {
   return (
     <FilterContainer>
-      <FilterButton onClick={() => addStatusCards('all')}>All</FilterButton>
-      <FilterButton onClick={() => addStatusCards('follow')}>
+      <FilterButton
+        selected={newStatus === 'all'}
+        onClick={() => addStatusCards('all')}
+      >
+        All
+      </FilterButton>
+      <FilterButton
+        selected={newStatus === 'follow'}
+        onClick={() => addStatusCards('follow')}
+      >
         Follow
       </FilterButton>
-      <FilterButton onClick={() => addStatusCards('following')}>
+      <FilterButton
+        selected={newStatus === 'following'}
+        onClick={() => addStatusCards('following')}
+      >
         Following
       </FilterButton>
     </FilterContainer>
