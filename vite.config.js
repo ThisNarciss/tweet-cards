@@ -4,7 +4,6 @@ import css from 'vite-plugin-css';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // root: 'src',
-
+  base: '/tweet-cards/',
   plugins: [react(), css],
 });
