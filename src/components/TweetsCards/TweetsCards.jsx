@@ -22,7 +22,7 @@ function statusFilter(state, action) {
       return (state = 'following');
 
     default:
-      break;
+      return;
   }
 }
 
