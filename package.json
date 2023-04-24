@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ThisNarciss.github.io/tweet-cards/",
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/tweet-cards/",
