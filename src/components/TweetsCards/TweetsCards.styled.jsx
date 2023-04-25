@@ -1,5 +1,17 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const animateBackground = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
 
 export const TweetsContainer = styled.div`
   display: flex;
@@ -8,6 +20,13 @@ export const TweetsContainer = styled.div`
   justify-content: center;
   padding: 40px;
   gap: 20px;
+  margin-left: auto;
+  margin-right: auto;
+
+  min-height: 900px;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: ${animateBackground} 15s ease infinite;
 `;
 
 export const BackLink = styled(Link)`
@@ -33,9 +52,10 @@ export const BackLink = styled(Link)`
 
 export const TweetsList = styled.ul`
   display: flex;
-  flex-direction: column;
+
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
 `;
 

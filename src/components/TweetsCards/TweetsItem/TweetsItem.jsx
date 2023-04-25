@@ -10,13 +10,14 @@ import {
   Text,
   TextContainer,
 } from './TweetsItem.styled';
+import { useEffect, useState } from 'react';
+import { updateUsersData } from '../../../api/tweets-card-api';
 
 import logo from '../../../images/logo-goit.svg';
 import picture from '../../../images/picture-@1x.png';
 import rectangle from '../../../images/rectangle-@1x.png';
-import { useEffect, useState } from 'react';
-import { updateUsersData } from '../../../api/tweets-card-api';
-import { ColorRing } from 'react-loader-spinner';
+import { Loader } from '../../Loader/Loader';
+import { Notify } from 'notiflix';
 
 export function TweetsItem({
   user: { id, avatar, tweets, followers, following },
@@ -27,10 +28,8 @@ export function TweetsItem({
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!error) {
-      return;
-    }
-    return alert('Upsssss');
+    if (!error) return;
+    Notify.failure('Error response');
   }, [error]);
 
   const onBtnClick = () => {
@@ -41,6 +40,7 @@ export function TweetsItem({
         .then(({ followers, following }) => {
           setIsFollow(following);
           setNewFollowersCount(followers);
+          Notify.success('Subscription success');
         })
         .catch(error => setError(error))
         .finally(() => setIsLoading(false));
@@ -54,6 +54,7 @@ export function TweetsItem({
         .then(({ followers, following }) => {
           setIsFollow(following);
           setNewFollowersCount(followers);
+          Notify.success('Unsubscribe success');
         })
         .catch(error => setError(error))
         .finally(() => setIsLoading(false));
@@ -87,17 +88,7 @@ export function TweetsItem({
         </Text>
       </TextContainer>
       <Btn onClick={onBtnClick} isFollow={isFollow}>
-        {isFollow ? 'Following' : 'Follow'}{' '}
-        {isLoading && (
-          <ColorRing
-            visible={true}
-            height="20"
-            width="20"
-            ariaLabel="blocks-loading"
-            wrapperClass="blocks-wrapper"
-            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-          />
-        )}
+        {isFollow ? 'Following' : 'Follow'} {isLoading && <Loader />}
       </Btn>
     </Item>
   );

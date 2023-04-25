@@ -1,5 +1,5 @@
 import { getUsersData } from '../../api/tweets-card-api';
-import { useEffect, useState, useReducer } from 'react';
+import { useEffect, useState, useReducer, useRef } from 'react';
 
 import {
   BackLink,
@@ -11,6 +11,8 @@ import { TweetsItem } from './TweetsItem/TweetsItem';
 import { useLocation } from 'react-router-dom';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { FilterTweets } from '../FilterTweets/FilterTweets';
+import { Notify } from 'notiflix';
+import { Loader } from '../Loader/Loader';
 
 function statusFilter(state, action) {
   switch (action.type) {
@@ -30,16 +32,41 @@ export function TweetsCards() {
   const [users, setUsers] = useState([]);
   const [pagCount, setPagCount] = useState(3);
   const [newStatus, dispatch] = useReducer(statusFilter, 'all');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  const listRef = useRef(null);
+  const currentListRef = listRef.current;
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
+    setIsLoading(true);
     getUsersData(pagCount)
-      .then(users => setUsers(users))
-      .catch(error => console.log(error));
+      .then(users => {
+        setUsers(users);
+      })
+      .catch(error => setError(error))
+      .finally(() => setIsLoading(false));
   }, [pagCount]);
 
+  useEffect(() => {
+    if (currentListRef) {
+      const list = listRef.current;
+
+      window.scrollBy({
+        top: list.scrollHeight - list.scrollTop,
+        behavior: 'smooth',
+      });
+    }
+  }, [users, currentListRef]);
+
+  useEffect(() => {
+    if (!error) return;
+    Notify.failure('Error response');
+  }, [error]);
+
+  console.log(error);
   const handleLoadMoreBtn = () => {
     setPagCount(prevState => prevState + 3);
   };
@@ -69,11 +96,14 @@ export function TweetsCards() {
         Go back
       </BackLink>
       <FilterTweets addStatusCards={addStatusCards} newStatus={newStatus} />
-      <TweetsList>
-        {filteredUsers.map(user => (
-          <TweetsItem key={user.id} user={user} />
-        ))}
-      </TweetsList>
+      {Boolean(users.length) && (
+        <TweetsList ref={listRef}>
+          {filteredUsers.map(user => (
+            <TweetsItem key={user.id} user={user} />
+          ))}
+        </TweetsList>
+      )}
+      {isLoading && !error && <Loader size={100} />}
       <LoadMoreBtn onClick={handleLoadMoreBtn}>Load more</LoadMoreBtn>
     </TweetsContainer>
   );
