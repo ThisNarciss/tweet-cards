@@ -4,7 +4,7 @@ import { resolve } from 'path';
 import css from 'vite-plugin-css';
 
 export default defineConfig({
-  base: '/tweet-cards/',
+  base: '/tweet-cards',
   plugins: [react(), css],
   resolve: {
     alias: {
