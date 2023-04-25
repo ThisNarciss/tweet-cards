@@ -1,6 +1,5 @@
 import { getUsersData } from '../../api/tweets-card-api';
 import { useEffect, useState, useReducer, useRef } from 'react';
-
 import {
   BackLink,
   BtnUpIcon,
@@ -77,7 +76,7 @@ export function TweetsCards() {
   const filteredUsers = filterUsers(newStatus, users);
 
   return (
-    <TweetsSection>
+    <TweetsSection title="Tweet Cards">
       <TweetsContainer ref={btnUpRef}>
         <BackLink to={backLinkHref}>
           <RiArrowGoBackFill />

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Avatar,
   AvatarBox,
@@ -45,7 +46,7 @@ export function TweetsItem({
       updateUsersData(id, { followers: newFollowersCount + 1, following: true })
         .then(({ following }) => {
           setIsFollow(following);
-          setNewFollowersCount(state => state + 1);
+          setNewFollowersCount(prevState => prevState + 1);
           Notify.success('Subscription success');
         })
         .catch(error => setError(error))
@@ -59,7 +60,7 @@ export function TweetsItem({
       })
         .then(({ following }) => {
           setIsFollow(following);
-          setNewFollowersCount(state => state - 1);
+          setNewFollowersCount(prevState => prevState - 1);
           Notify.success('Unsubscribe success');
         })
         .catch(error => setError(error))
@@ -90,3 +91,13 @@ export function TweetsItem({
     </Item>
   );
 }
+
+TweetsItem.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    tweets: PropTypes.number.isRequired,
+    following: PropTypes.bool.isRequired,
+    followers: PropTypes.number.isRequired,
+  }).isRequired,
+};

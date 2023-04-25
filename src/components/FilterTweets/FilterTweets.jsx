@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import {
   DropDownBox,
@@ -43,3 +44,8 @@ export function FilterTweets({ addStatusCards, newStatus }) {
     </DropDownBox>
   );
 }
+
+FilterTweets.propTypes = {
+  addStatusCards: PropTypes.func.isRequired,
+  newStatus: PropTypes.string.isRequired,
+};
