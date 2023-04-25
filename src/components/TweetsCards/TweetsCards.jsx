@@ -3,6 +3,7 @@ import { useEffect, useState, useReducer, useRef } from 'react';
 
 import {
   BackLink,
+  BtnUpIcon,
   ButtonUp,
   LoadMoreBtn,
   TweetsContainer,
@@ -17,19 +18,18 @@ import { Notify } from 'notiflix';
 import { Loader } from '../Loader/Loader';
 import { statusFilter } from '../../utils/reduser-func';
 import { filterUsers } from '../../utils/filter-func';
+import { usePagination } from '../../hooks/usePagination';
 
 export function TweetsCards() {
   const [users, setUsers] = useState([]);
-  const [endPagCount, setEndPagCount] = useState(3);
-  const [startPagCount, setStartPagCount] = useState(0);
-  const [newStatus, dispatch] = useReducer(statusFilter, 'all');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [loadMore, endPagCount, startPagCount] = usePagination();
+  const [newStatus, dispatch] = useReducer(statusFilter, 'all');
 
   const listRef = useRef(null);
   const currentListRef = listRef.current;
   const btnUpRef = useRef(null);
-  const currentBtnUpRef = btnUpRef.current;
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
 
@@ -70,11 +70,6 @@ export function TweetsCards() {
     btnUpRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const handleLoadMoreBtn = () => {
-    setStartPagCount(prevState => prevState + 3);
-    setEndPagCount(prevState => prevState + 3);
-  };
-
   const addStatusCards = status => {
     dispatch({ type: status });
   };
@@ -97,9 +92,11 @@ export function TweetsCards() {
           </TweetsList>
         )}
         {isLoading && !error && <Loader size={100} />}
-        <LoadMoreBtn onClick={handleLoadMoreBtn}>Load more</LoadMoreBtn>
+        <LoadMoreBtn onClick={loadMore}>Load more</LoadMoreBtn>
       </TweetsContainer>
-      <ButtonUp onClick={handleBtnUpClick}>button up</ButtonUp>
+      <ButtonUp onClick={handleBtnUpClick}>
+        <BtnUpIcon size={80} />
+      </ButtonUp>
     </TweetsSection>
   );
 }

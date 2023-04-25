@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
+import { Link } from 'react-router-dom';
+import { BiUpArrowCircle } from 'react-icons/bi';
 
 const animateBackground = keyframes`
   0% {
@@ -91,4 +92,10 @@ export const ButtonUp = styled.button`
   position: fixed;
   right: 20px;
   bottom: 20px;
+  background-color: transparent;
+`;
+
+export const BtnUpIcon = styled(BiUpArrowCircle)`
+  color: rgb(255, 255, 0);
+  opacity: 0.5;
 `;
