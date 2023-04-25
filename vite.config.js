@@ -10,7 +10,6 @@ export default defineConfig({
   plugins: [react(), css],
   resolve: {
     alias: {
-      // add alias for react-router-dom to resolve properly in your application
       'react-router-dom': resolve(__dirname, 'node_modules/react-router-dom'),
     },
   },

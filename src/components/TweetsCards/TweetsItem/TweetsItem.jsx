@@ -14,7 +14,7 @@ import {
 import logo from '../../../images/logo-goit.svg';
 import picture from '../../../images/picture-@1x.png';
 import rectangle from '../../../images/rectangle-@1x.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updateUsersData } from '../../../api/tweets-card-api';
 import { ColorRing } from 'react-loader-spinner';
 
@@ -24,6 +24,14 @@ export function TweetsItem({
   const [isFollow, setIsFollow] = useState(following);
   const [newFollowersCount, setNewFollowersCount] = useState(followers);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+    return alert('Upsssss');
+  }, [error]);
 
   const onBtnClick = () => {
     if (!isFollow) {
@@ -34,7 +42,7 @@ export function TweetsItem({
           setIsFollow(following);
           setNewFollowersCount(followers);
         })
-        .catch(error => console.log(error))
+        .catch(error => setError(error))
         .finally(() => setIsLoading(false));
     } else {
       setIsLoading(true);
@@ -47,7 +55,7 @@ export function TweetsItem({
           setIsFollow(following);
           setNewFollowersCount(followers);
         })
-        .catch(error => console.log(error))
+        .catch(error => setError(error))
         .finally(() => setIsLoading(false));
     }
   };
