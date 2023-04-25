@@ -13,6 +13,12 @@ const animateBackground = keyframes`
   }
 `;
 
+export const TweetsSection = styled.section`
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: ${animateBackground} 15s ease infinite;
+`;
+
 export const TweetsContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,11 +28,8 @@ export const TweetsContainer = styled.div`
   gap: 20px;
   margin-left: auto;
   margin-right: auto;
-
+  width: 1280px;
   min-height: 900px;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: ${animateBackground} 15s ease infinite;
 `;
 
 export const BackLink = styled(Link)`
@@ -56,7 +59,7 @@ export const TweetsList = styled.ul`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 30px;
 `;
 
 export const LoadMoreBtn = styled.button`
@@ -83,4 +86,9 @@ export const LoadMoreBtn = styled.button`
     color: #666;
     cursor: not-allowed;
   }
+`;
+export const ButtonUp = styled.button`
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
 `;

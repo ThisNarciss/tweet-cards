@@ -2,16 +2,14 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://6442397876540ce22586f7fa.mockapi.io/api/v1';
 
-export function getUsersData(pagCount = 3) {
+export function getUsersData(start = 0, end = 3, signal) {
   return axios
-    .get('/users')
-    .then(response => response.data.slice(0, pagCount))
-    .catch(error => error);
+    .get('/users', {
+      signal: signal,
+    })
+    .then(response => response.data.slice(start, end));
 }
 
 export function updateUsersData(id, data) {
-  return axios
-    .put(`/users/${id}`, data)
-    .then(response => response.data)
-    .catch(error => error);
+  return axios.put(`/users/${id}`, data).then(response => response.data);
 }

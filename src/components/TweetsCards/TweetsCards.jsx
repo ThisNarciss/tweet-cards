@@ -3,9 +3,11 @@ import { useEffect, useState, useReducer, useRef } from 'react';
 
 import {
   BackLink,
+  ButtonUp,
   LoadMoreBtn,
   TweetsContainer,
   TweetsList,
+  TweetsSection,
 } from './TweetsCards.styled';
 import { TweetsItem } from './TweetsItem/TweetsItem';
 import { useLocation } from 'react-router-dom';
@@ -13,42 +15,40 @@ import { RiArrowGoBackFill } from 'react-icons/ri';
 import { FilterTweets } from '../FilterTweets/FilterTweets';
 import { Notify } from 'notiflix';
 import { Loader } from '../Loader/Loader';
-
-function statusFilter(state, action) {
-  switch (action.type) {
-    case 'all':
-      return (state = 'all');
-    case 'follow':
-      return (state = 'follow');
-    case 'following':
-      return (state = 'following');
-
-    default:
-      return;
-  }
-}
+import { statusFilter } from '../../utils/reduser-func';
+import { filterUsers } from '../../utils/filter-func';
 
 export function TweetsCards() {
   const [users, setUsers] = useState([]);
-  const [pagCount, setPagCount] = useState(3);
+  const [endPagCount, setEndPagCount] = useState(3);
+  const [startPagCount, setStartPagCount] = useState(0);
   const [newStatus, dispatch] = useReducer(statusFilter, 'all');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const listRef = useRef(null);
   const currentListRef = listRef.current;
+  const btnUpRef = useRef(null);
+  const currentBtnUpRef = btnUpRef.current;
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
     setIsLoading(true);
-    getUsersData(pagCount)
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    getUsersData(startPagCount, endPagCount, signal)
       .then(users => {
-        setUsers(users);
+        setUsers(prevState => [...prevState, ...users]);
       })
-      .catch(error => setError(error))
+      .catch(error => {
+        setError(error);
+      })
       .finally(() => setIsLoading(false));
-  }, [pagCount]);
+    return () => {
+      abortController.abort();
+    };
+  }, [startPagCount, endPagCount, newStatus]);
 
   useEffect(() => {
     if (currentListRef) {
@@ -66,45 +66,40 @@ export function TweetsCards() {
     Notify.failure('Error response');
   }, [error]);
 
-  console.log(error);
+  const handleBtnUpClick = () => {
+    btnUpRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   const handleLoadMoreBtn = () => {
-    setPagCount(prevState => prevState + 3);
+    setStartPagCount(prevState => prevState + 3);
+    setEndPagCount(prevState => prevState + 3);
   };
 
   const addStatusCards = status => {
     dispatch({ type: status });
   };
 
-  const filterUsers = filter => {
-    switch (filter) {
-      case 'follow':
-        return users.filter(({ following }) => !following);
-      case 'following':
-        return users.filter(({ following }) => following);
-
-      default:
-        return users;
-    }
-  };
-
-  const filteredUsers = filterUsers(newStatus);
+  const filteredUsers = filterUsers(newStatus, users);
 
   return (
-    <TweetsContainer>
-      <BackLink to={backLinkHref}>
-        <RiArrowGoBackFill />
-        Go back
-      </BackLink>
-      <FilterTweets addStatusCards={addStatusCards} newStatus={newStatus} />
-      {Boolean(users.length) && (
-        <TweetsList ref={listRef}>
-          {filteredUsers.map(user => (
-            <TweetsItem key={user.id} user={user} />
-          ))}
-        </TweetsList>
-      )}
-      {isLoading && !error && <Loader size={100} />}
-      <LoadMoreBtn onClick={handleLoadMoreBtn}>Load more</LoadMoreBtn>
-    </TweetsContainer>
+    <TweetsSection>
+      <TweetsContainer ref={btnUpRef}>
+        <BackLink to={backLinkHref}>
+          <RiArrowGoBackFill />
+          Go back
+        </BackLink>
+        <FilterTweets addStatusCards={addStatusCards} newStatus={newStatus} />
+        {Boolean(users.length) && (
+          <TweetsList ref={listRef}>
+            {filteredUsers.map(user => (
+              <TweetsItem key={user.id} user={user} />
+            ))}
+          </TweetsList>
+        )}
+        {isLoading && !error && <Loader size={100} />}
+        <LoadMoreBtn onClick={handleLoadMoreBtn}>Load more</LoadMoreBtn>
+      </TweetsContainer>
+      <ButtonUp onClick={handleBtnUpClick}>button up</ButtonUp>
+    </TweetsSection>
   );
 }

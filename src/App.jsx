@@ -1,3 +1,4 @@
+import { Loader } from './components/Loader/Loader';
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -6,7 +7,7 @@ const Tweets = lazy(() => import('./pages/Tweets'));
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loader size={150} />}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tweets" element={<Tweets />} />

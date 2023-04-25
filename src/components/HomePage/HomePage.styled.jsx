@@ -16,16 +16,17 @@ const textAnim = keyframes`
   }
 `;
 
+export const HomeSection = styled.section`
+  background-image: url(${nightCity});
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
 export const HomeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-
-  background-image: url(${nightCity});
-  background-size: cover;
-  background-repeat: no-repeat;
-  overflow: auto;
 `;
 
 export const HomeLink = styled(Link)`

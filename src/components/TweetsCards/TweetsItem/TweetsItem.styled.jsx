@@ -5,6 +5,7 @@ export const Item = styled.li`
   padding: 20px;
   width: 380px;
   height: 460px;
+
   background-image: linear-gradient(
     114.99deg,
     #471ca9 -0.99%,
