@@ -1,4 +1,4 @@
-import { TweetsCards } from '../components/TweetsCards/TweetsCards';
+import { TweetsCards } from '@/components/TweetsCards/TweetsCards';
 
 export default function Tweets() {
   return (

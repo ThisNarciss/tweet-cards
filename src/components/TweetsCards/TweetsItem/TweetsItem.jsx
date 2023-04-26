@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { Notify } from 'notiflix';
 import {
   Avatar,
   AvatarBox,
@@ -11,17 +13,15 @@ import {
   Text,
   TextContainer,
 } from './TweetsItem.styled';
-import { useEffect, useState } from 'react';
-import { updateUsersData } from '../../../api/tweets-card-api';
-import { Loader } from '../../Loader/Loader';
-import { Notify } from 'notiflix';
-import { changeFollowersCountStyle } from '../../../utils/counter-ftyle-func';
+import { updateUsersData } from '@/api/tweets-card-api';
+import { Loader } from '@/components/Loader/Loader';
+import { changeFollowersCountStyle } from '@/utils/counter-ftyle-func';
 
-import logo from '../../../images/logo-goit.svg';
-import picture from '../../../images/picture-@1x.png';
-import picture2x from '../../../images/picture-@2x.png';
-import rectangle from '../../../images/rectangle-@1x.png';
-import rectangle2x from '../../../images/rectangle-@2x.png';
+import logo from '@/images/logo-goit.svg';
+import picture from '@/images/picture-@1x.png';
+import picture2x from '@/images/picture-@2x.png';
+import rectangle from '@/images/rectangle-@1x.png';
+import rectangle2x from '@/images/rectangle-@2x.png';
 
 export function TweetsItem({
   user: { id, avatar, tweets, followers, following },

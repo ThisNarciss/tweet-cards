@@ -5,7 +5,7 @@ import {
   HomeLink,
   HomeSection,
   Span,
-} from './HomePage.styled';
+} from '@/components/HomePage/HomePage.styled';
 
 export function HomePage() {
   const location = useLocation();

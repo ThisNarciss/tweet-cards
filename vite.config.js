@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react(), css],
   resolve: {
     alias: {
-      'react-router-dom': resolve(__dirname, 'node_modules/react-router-dom'),
+      '@': resolve(__dirname, 'src'),
     },
   },
 });

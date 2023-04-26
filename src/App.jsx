@@ -1,9 +1,9 @@
-import { Loader } from './components/Loader/Loader';
+import { Loader } from '@/components/Loader/Loader';
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-const Home = lazy(() => import('./pages/Home'));
-const Tweets = lazy(() => import('./pages/Tweets'));
+const Home = lazy(() => import('@/pages/Home'));
+const Tweets = lazy(() => import('@/pages/Tweets'));
 
 function App() {
   return (

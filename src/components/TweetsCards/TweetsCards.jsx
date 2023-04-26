@@ -1,5 +1,7 @@
-import { getUsersData } from '../../api/tweets-card-api';
 import { useEffect, useState, useReducer, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { RiArrowGoBackFill } from 'react-icons/ri';
+import { Notify } from 'notiflix';
 import {
   BackLink,
   BtnUpIcon,
@@ -9,15 +11,13 @@ import {
   TweetsList,
   TweetsSection,
 } from './TweetsCards.styled';
-import { TweetsItem } from './TweetsItem/TweetsItem';
-import { useLocation } from 'react-router-dom';
-import { RiArrowGoBackFill } from 'react-icons/ri';
-import { FilterTweets } from '../FilterTweets/FilterTweets';
-import { Notify } from 'notiflix';
-import { Loader } from '../Loader/Loader';
-import { statusFilter } from '../../utils/reduser-func';
-import { filterUsers } from '../../utils/filter-func';
-import { usePagination } from '../../hooks/usePagination';
+import { getUsersData } from '@/api/tweets-card-api';
+import { TweetsItem } from '@/components/TweetsCards/TweetsItem/TweetsItem';
+import { FilterTweets } from '@/components/FilterTweets/FilterTweets';
+import { Loader } from '@/components/Loader/Loader';
+import { statusFilter } from '@/utils/reduser-func';
+import { filterUsers } from '@/utils/filter-func';
+import { usePagination } from '@/hooks/usePagination';
 
 export function TweetsCards() {
   const [users, setUsers] = useState([]);
