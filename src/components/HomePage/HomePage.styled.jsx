@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { GiExitDoor } from 'react-icons/gi';
 
-import nightCity from '../../images/peakpx.jpg';
+import nightCity from '@/images/peakpx.jpg';
 
 const textAnim = keyframes`
   0% {

@@ -14,6 +14,16 @@ const animateBackground = keyframes`
   }
 `;
 
+const scale = keyframes`
+  0% {
+      transform: scale(0.9);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+`;
+
 export const TweetsSection = styled.section`
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
@@ -42,16 +52,8 @@ export const BackLink = styled(Link)`
   background-color: #f8f800;
   padding: 20px;
   border-radius: 10px;
-  @keyframes scale {
-    0% {
-      transform: scale(0.9);
-    }
 
-    100% {
-      transform: scale(1);
-    }
-  }
-  animation: scale 1000ms infinite alternate ease-in-out;
+  animation: ${scale} 1000ms infinite alternate ease-in-out;
 `;
 
 export const TweetsList = styled.ul`
@@ -88,6 +90,7 @@ export const LoadMoreBtn = styled.button`
     cursor: not-allowed;
   }
 `;
+
 export const ButtonUp = styled.button`
   position: fixed;
   right: 20px;

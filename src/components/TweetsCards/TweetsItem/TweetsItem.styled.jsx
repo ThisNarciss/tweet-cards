@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const rotateY = keyframes`
+    0% {
+      transform: perspective(400px) rotateY(0deg);
+    }
+
+    100% {
+      transform: perspective(400px) rotateY(10deg);
+    }
+`;
 
 export const Item = styled.li`
   position: relative;
@@ -16,26 +26,8 @@ export const Item = styled.li`
   border-radius: 20px;
 `;
 
-export const Logo = styled.img`
-  @keyframes changeFill {
-    0% {
-      fill: deeppink;
-    }
+export const Logo = styled.img``;
 
-    50% {
-      fill: orange;
-    }
-
-    100% {
-      fill: deepskyblue;
-    }
-  }
-  animation-name: changeFill;
-  animation-duration: 3000ms;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-`;
 export const Rectangle = styled.img`
   position: absolute;
   top: 50%;
@@ -79,16 +71,7 @@ export const PictureBox = styled.div`
   transform: translateX(-50%);
 `;
 export const Picture = styled.img`
-  @keyframes rotateY {
-    0% {
-      transform: perspective(400px) rotateY(0deg);
-    }
-
-    100% {
-      transform: perspective(400px) rotateY(10deg);
-    }
-  }
-  animation: rotateY 1500ms infinite alternate ease-in-out;
+  animation: ${rotateY} 1500ms infinite alternate ease-in-out;
 `;
 export const TextContainer = styled.div`
   margin-top: 242px;
@@ -98,7 +81,7 @@ export const Text = styled.p`
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
-  line-height: 24px;
+  line-height: 1.2;
   text-transform: uppercase;
   text-align: center;
   color: #ebd8ff;
@@ -118,7 +101,7 @@ export const Btn = styled.button`
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  line-height: 22px;
+  line-height: 1.22;
   text-transform: uppercase;
   color: #373737;
   transition: background-color 250ms linear;
