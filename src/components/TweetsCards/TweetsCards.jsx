@@ -47,7 +47,7 @@ export function TweetsCards() {
     return () => {
       abortController.abort();
     };
-  }, [startPagCount, endPagCount, newStatus]);
+  }, [startPagCount, endPagCount]);
 
   useEffect(() => {
     if (currentListRef) {

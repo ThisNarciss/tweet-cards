@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ColorRing } from 'react-loader-spinner';
 
 export function Loader({ size = 20 }) {
@@ -12,3 +13,7 @@ export function Loader({ size = 20 }) {
     />
   );
 }
+
+Loader.propTypes = {
+  size: PropTypes.number,
+};
