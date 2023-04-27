@@ -65,7 +65,7 @@ export function TweetsItem({ user: { id, avatar, tweets, followers, user } }) {
 
   return (
     <Item>
-      <Logo src={logo} />
+      <Logo src={logo} alt="avatar" />
       <PictureBox>
         <Picture
           srcSet={`${picture} 1x, ${picture2x} 2x`}
