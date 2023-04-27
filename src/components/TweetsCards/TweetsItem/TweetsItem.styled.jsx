@@ -37,30 +37,46 @@ export const Rectangle = styled.img`
 export const AvatarBox = styled.div`
   width: 80px;
   height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 10px solid #ebd8ff;
-  box-shadow: 0px 4.39163px 4.39163px rgba(0, 0, 0, 0.06),
-    inset 0px -2.19582px 4.39163px #ae7be3,
-    inset 0px 4.39163px 3.29372px #fbf8ff;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 136px;
+  position: relative;
+  ::before {
+    content: '';
+    position: absolute;
+    right: -150px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: 150px;
+    height: 8px;
+    background-color: #ebd8ff;
+  }
+  ::after {
+    content: '';
+    position: absolute;
+    left: -150px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: 150px;
+    height: 8px;
+    background-color: #ebd8ff;
+  }
 `;
-export const Ellipse = styled.img`
-  object-fit: fill;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-`;
+
 export const Avatar = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 10px solid #ebd8ff;
+  box-shadow: 0px 4.39163px 4.39163px rgba(0, 0, 0, 0.06),
+    inset 0px -2.19582px 4.39163px #ae7be3,
+    inset 0px 4.39163px 3.29372px #fbf8ff;
   z-index: 2;
 `;
 export const PictureBox = styled.div`
@@ -74,7 +90,7 @@ export const Picture = styled.img`
   animation: ${rotateY} 1500ms infinite alternate ease-in-out;
 `;
 export const TextContainer = styled.div`
-  margin-top: 242px;
+  margin-top: 26px;
 `;
 export const Text = styled.p`
   font-family: 'Montserrat';
@@ -105,12 +121,18 @@ export const Btn = styled.button`
   text-transform: uppercase;
   color: #373737;
   transition: background-color 250ms linear;
-  background: ${({ isFollow }) => (isFollow ? '#5cd3a8' : '#ebd8ff')};
+  background: ${({ user }) => {
+    return JSON.parse(localStorage.getItem(`${user}`)) ? '#5cd3a8' : '#ebd8ff';
+  }};
   box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   transition: all 300ms ease;
   :hover {
-    background-color: ${({ isFollow }) => (isFollow ? '#3a8167' : '#8f829c')};
+    background-color: ${({ user }) => {
+      return JSON.parse(localStorage.getItem(`${user}`))
+        ? '#3a8167'
+        : '#8f829c';
+    }};
   }
   :active {
     transform: translateY(1px);

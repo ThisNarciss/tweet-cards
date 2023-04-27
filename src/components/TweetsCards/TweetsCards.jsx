@@ -52,7 +52,6 @@ export function TweetsCards() {
   useEffect(() => {
     if (currentListRef) {
       const list = listRef.current;
-
       window.scrollBy({
         top: list.scrollHeight - list.scrollTop,
         behavior: 'smooth',
@@ -74,6 +73,7 @@ export function TweetsCards() {
   };
 
   const filteredUsers = filterUsers(newStatus, users);
+  console.log(filteredUsers);
 
   return (
     <TweetsSection title="Tweet Cards">
