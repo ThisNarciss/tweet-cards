@@ -18,6 +18,7 @@ import { Loader } from '@/components/Loader/Loader';
 import { statusFilter } from '@/utils/reduser-func';
 import { filterUsers } from '@/utils/filter-func';
 import { usePagination } from '@/hooks/usePagination';
+import { getLocalUsers } from '../../utils/get-local-users';
 
 export function TweetsCards() {
   const [users, setUsers] = useState([]);
@@ -25,6 +26,7 @@ export function TweetsCards() {
   const [error, setError] = useState(null);
   const [loadMore, endPagCount, startPagCount] = usePagination();
   const [filter, dispatch] = useReducer(statusFilter, 'all');
+  const [showButton, setShowButton] = useState(false);
 
   const listRef = useRef(null);
   const currentListRef = listRef.current;
@@ -60,6 +62,22 @@ export function TweetsCards() {
   }, [users, currentListRef]);
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 500) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!error) return;
     Notify.failure('Error response');
   }, [error]);
@@ -90,11 +108,15 @@ export function TweetsCards() {
           </TweetsList>
         )}
         {isLoading && !error && <Loader size={100} />}
-        <LoadMoreBtn onClick={loadMore}>Load more</LoadMoreBtn>
+        {users.length < getLocalUsers().length && (
+          <LoadMoreBtn onClick={loadMore}>Load more</LoadMoreBtn>
+        )}
       </TweetsContainer>
-      <ButtonUp onClick={handleBtnUpClick}>
-        <BtnUpIcon size={80} />
-      </ButtonUp>
+      {showButton && (
+        <ButtonUp onClick={handleBtnUpClick}>
+          <BtnUpIcon size={80} />
+        </ButtonUp>
+      )}
     </TweetsSection>
   );
 }
