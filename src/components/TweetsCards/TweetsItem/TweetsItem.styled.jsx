@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { getUserStatus } from '../../../utils/set-local-status';
 
 const rotateY = keyframes`
     0% {
@@ -121,17 +122,15 @@ export const Btn = styled.button`
   text-transform: uppercase;
   color: #373737;
   transition: background-color 250ms linear;
-  background: ${({ user }) => {
-    return JSON.parse(localStorage.getItem(`${user}`)) ? '#5cd3a8' : '#ebd8ff';
+  background: ${({ id }) => {
+    return getUserStatus(id) ? '#5cd3a8' : '#ebd8ff';
   }};
   box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   transition: all 300ms ease;
   :hover {
-    background-color: ${({ user }) => {
-      return JSON.parse(localStorage.getItem(`${user}`))
-        ? '#3a8167'
-        : '#8f829c';
+    background-color: ${({ id }) => {
+      return getUserStatus(id) ? '#3a8167' : '#8f829c';
     }};
   }
   :active {

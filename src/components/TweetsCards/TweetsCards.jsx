@@ -24,7 +24,7 @@ export function TweetsCards() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [loadMore, endPagCount, startPagCount] = usePagination();
-  const [newStatus, dispatch] = useReducer(statusFilter, 'all');
+  const [filter, dispatch] = useReducer(statusFilter, 'all');
 
   const listRef = useRef(null);
   const currentListRef = listRef.current;
@@ -72,8 +72,7 @@ export function TweetsCards() {
     dispatch({ type: status });
   };
 
-  const filteredUsers = filterUsers(newStatus, users);
-  console.log(filteredUsers);
+  const filteredUsers = filterUsers(filter, users);
 
   return (
     <TweetsSection title="Tweet Cards">
@@ -82,7 +81,7 @@ export function TweetsCards() {
           <RiArrowGoBackFill />
           Go back
         </BackLink>
-        <FilterTweets addStatusCards={addStatusCards} newStatus={newStatus} />
+        <FilterTweets addStatusCards={addStatusCards} filter={filter} />
         {Boolean(users.length) && (
           <TweetsList ref={listRef}>
             {filteredUsers.map(user => (

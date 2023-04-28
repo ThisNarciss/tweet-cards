@@ -1,13 +1,12 @@
+import { getUserStatus } from './set-local-status';
+
 export const filterUsers = (filter, users) => {
   switch (filter) {
     case 'follow':
-      return users.filter(
-        ({ user }) => !JSON.parse(localStorage.getItem(`${user}`))
-      );
+      return users.filter(({ id }) => !getUserStatus(id));
+
     case 'following':
-      return users.filter(({ user }) =>
-        JSON.parse(localStorage.getItem(`${user}`))
-      );
+      return users.filter(({ id }) => getUserStatus(id));
 
     default:
       return users;

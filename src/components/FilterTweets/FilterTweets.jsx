@@ -8,7 +8,7 @@ import {
   FilterIcon,
 } from './FilterTweets.styled';
 
-export function FilterTweets({ addStatusCards, newStatus }) {
+export function FilterTweets({ addStatusCards, filter }) {
   const [isShow, setIsShow] = useState(false);
 
   const handleDropDownClick = () => {
@@ -23,19 +23,19 @@ export function FilterTweets({ addStatusCards, newStatus }) {
       </DropDownBtn>
       <FilterContainer isShow={isShow}>
         <FilterButton
-          selected={newStatus === 'all'}
+          selected={filter === 'all'}
           onClick={() => addStatusCards('all')}
         >
           All
         </FilterButton>
         <FilterButton
-          selected={newStatus === 'follow'}
+          selected={filter === 'follow'}
           onClick={() => addStatusCards('follow')}
         >
           Follow
         </FilterButton>
         <FilterButton
-          selected={newStatus === 'following'}
+          selected={filter === 'following'}
           onClick={() => addStatusCards('following')}
         >
           Following
@@ -47,5 +47,5 @@ export function FilterTweets({ addStatusCards, newStatus }) {
 
 FilterTweets.propTypes = {
   addStatusCards: PropTypes.func.isRequired,
-  newStatus: PropTypes.string.isRequired,
+  filter: PropTypes.string.isRequired,
 };

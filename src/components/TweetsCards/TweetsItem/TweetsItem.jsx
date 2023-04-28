@@ -19,8 +19,9 @@ import { changeFollowersCountStyle } from '@/utils/counter-ftyle-func';
 import logo from '@/images/logo-goit.svg';
 import picture from '@/images/picture-@1x.png';
 import picture2x from '@/images/picture-@2x.png';
+import { getUserStatus, setNewStatus } from '../../../utils/set-local-status';
 
-export function TweetsItem({ user: { id, avatar, tweets, followers, user } }) {
+export function TweetsItem({ user: { id, avatar, tweets, followers } }) {
   const [newFollowersCount, setNewFollowersCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -35,13 +36,13 @@ export function TweetsItem({ user: { id, avatar, tweets, followers, user } }) {
   }, [error]);
 
   const onBtnClick = () => {
-    if (!JSON.parse(localStorage.getItem(`${user}`))) {
+    if (!getUserStatus(id)) {
       setIsLoading(true);
       updateUsersData(id, {
         followers: newFollowersCount + 1,
       })
-        .then(({ user }) => {
-          localStorage.setItem(`${user}`, JSON.stringify(true));
+        .then(({ id }) => {
+          setNewStatus(id, true);
           setNewFollowersCount(prevState => prevState + 1);
           Notify.success('Subscription success');
         })
@@ -53,8 +54,8 @@ export function TweetsItem({ user: { id, avatar, tweets, followers, user } }) {
       updateUsersData(id, {
         followers: newFollowersCount - 1,
       })
-        .then(({ user }) => {
-          localStorage.setItem(`${user}`, JSON.stringify(false));
+        .then(({ id }) => {
+          setNewStatus(id, false);
           setNewFollowersCount(prevState => prevState - 1);
           Notify.success('Unsubscribe success');
         })
@@ -82,9 +83,8 @@ export function TweetsItem({ user: { id, avatar, tweets, followers, user } }) {
           {changeFollowersCountStyle(newFollowersCount)} followers
         </Text>
       </TextContainer>
-      <Btn onClick={onBtnClick} user={user}>
-        {JSON.parse(localStorage.getItem(`${user}`)) ? 'Following' : 'Follow'}{' '}
-        {isLoading && <Loader />}
+      <Btn onClick={onBtnClick} id={id}>
+        {getUserStatus(id) ? 'Following' : 'Follow'} {isLoading && <Loader />}
       </Btn>
     </Item>
   );
@@ -96,6 +96,5 @@ TweetsItem.propTypes = {
     avatar: PropTypes.string.isRequired,
     tweets: PropTypes.number.isRequired,
     followers: PropTypes.number.isRequired,
-    user: PropTypes.string.isRequired,
   }).isRequired,
 };
