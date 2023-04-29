@@ -1,3 +1,3 @@
 export function getLocalUsers() {
-  return JSON.parse(localStorage.getItem('users'));
+  return JSON.parse(localStorage.getItem('users')) ?? [];
 }
